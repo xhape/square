@@ -1,4 +1,4 @@
-package xyz.javonitalla.gelo.fakecamera;
+package xyz.javonitalla.gelo.square;
 
 import org.junit.Test;
 
