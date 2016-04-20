@@ -18,14 +18,14 @@ import java.io.OutputStream;
  * No UI
  * activity that returns mock photo
  */
-public class TakeMockPhotoActivity extends AppCompatActivity {
+public class IntentCapturePhotoActivity extends AppCompatActivity {
 
   private final static int[] MOCK_PHOTOS = {
       R.drawable.mock_1, R.drawable.mock_2, R.drawable.mock_3, R.drawable.mock_4,
       R.drawable.mock_5, R.drawable.mock_6, R.drawable.mock_7, R.drawable.mock_8};
   static int lastPhotoIndex = -1;
 
-  private final static String TAG = TakeMockPhotoActivity.class.getName();
+  private final static String TAG = IntentCapturePhotoActivity.class.getName();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

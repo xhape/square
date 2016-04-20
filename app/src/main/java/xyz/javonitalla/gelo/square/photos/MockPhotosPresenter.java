@@ -30,7 +30,12 @@ public class MockPhotosPresenter implements MockPhotosContract.Presenter {
 
   @Override
   public void handleNoAppToHandleCameraIntent() {
-    view.showNoCamera();
+    view.showNoCameraError();
+  }
+
+  @Override
+  public void handleUnableToCreateFile() {
+    view.showUnableToCreateFileError();
   }
 
   public void setCurrentPhotoPath(String currentPhotoPath) {

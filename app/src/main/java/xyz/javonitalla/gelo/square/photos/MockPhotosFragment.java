@@ -72,10 +72,15 @@ public class MockPhotosFragment extends Fragment implements MockPhotosContract.V
   }
 
   @Override
-  public void showNoCamera() {
-    if (fab != null) {
-      Snackbar.make(fab, "No App installed to take pictures", Snackbar.LENGTH_LONG).show();
-    }
+  public void showNoCameraError() {
+    //no need to check for fab if null since it can't be clicked if null
+    Snackbar.make(fab, "No App installed to take pictures", Snackbar.LENGTH_LONG).show();
+  }
+
+  @Override
+  public void showUnableToCreateFileError() {
+    Snackbar.make(fab, "Unable to create file. Make sure you have enough space or SD card is available",
+        Snackbar.LENGTH_LONG).show();
   }
 
   @Override
@@ -92,7 +97,9 @@ public class MockPhotosFragment extends Fragment implements MockPhotosContract.V
     @Override
     public void onClick(View v) {
       Intent intent = createTakePictureIntent();
-      if (isCameraAppAvailable(intent)) {
+      if (intent == null) {
+        presenter.handleUnableToCreateFile();
+      } else if (isCameraAppAvailable(intent)) {
         startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
       } else {
         presenter.handleNoAppToHandleCameraIntent();
@@ -101,9 +108,13 @@ public class MockPhotosFragment extends Fragment implements MockPhotosContract.V
 
     @Nullable
     private Intent createTakePictureIntent() {
-      Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
       File photoFile = createImageFile();
       if (photoFile != null) {
+        // Save a file: path for use with ACTION_VIEW intents
+        String currentPhotoPath = "file:" + photoFile.getAbsolutePath();
+        presenter.setCurrentPhotoPath(currentPhotoPath);
+
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
         return takePictureIntent;
       }
@@ -126,9 +137,6 @@ public class MockPhotosFragment extends Fragment implements MockPhotosContract.V
       File image = null;
       try {
         image = File.createTempFile(imageFileName, ".jpg", storageDir);
-        // Save a file: path for use with ACTION_VIEW intents
-        String currentPhotoPath = "file:" + image.getAbsolutePath();
-        presenter.setCurrentPhotoPath(currentPhotoPath);
       } catch (IOException e) {
         Log.e(TAG, "Unable to create image file", e);
       }

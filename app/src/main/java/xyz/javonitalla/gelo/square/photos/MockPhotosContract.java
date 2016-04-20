@@ -27,7 +27,9 @@ public interface MockPhotosContract {
     /**
      * Called to show error when there is no app to handle intent that takes photo
      */
-    void showNoCamera();
+    void showNoCameraError();
+
+    void showUnableToCreateFileError();
 
     void setPresenter(Presenter presenter);
   }
@@ -50,6 +52,8 @@ public interface MockPhotosContract {
      * Called when there is no application available to take pictures
      */
     void handleNoAppToHandleCameraIntent();
+
+    void handleUnableToCreateFile();
 
     void setCurrentPhotoPath(String photoPath);
 

@@ -13,8 +13,7 @@
       android:supportsRtl="true"
       android:theme="@style/AppTheme">
 
-    <activity android:name=".TakeMockPhotoActivity">
-
+    <activity android:name=".IntentCapturePhotoActivity">
       <intent-filter>
         <action android:name="android.media.action.IMAGE_CAPTURE"/>
         <category android:name="android.intent.category.DEFAULT"/>
@@ -30,12 +29,32 @@
         android:name=".photos.MockPhotosActivity"
         android:label="@string/title_activity_photo_list"
         android:theme="@style/AppTheme.NoActionBar">
-
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
+    </activity>
 
+    <activity android:name=".IntentFilePickerActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.GET_CONTENT"/>
+        <data android:mimeType="*/*"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.OPENABLE"/>
+      </intent-filter>
+
+      <intent-filter>
+        <action android:name="android.intent.action.GET_CONTENT"/>
+        <data android:scheme="file"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.OPENABLE"/>
+      </intent-filter>
+
+      <intent-filter>
+        <action android:name="android.intent.action.GET_CONTENT"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.OPENABLE"/>
+      </intent-filter>
     </activity>
   </application>
 
